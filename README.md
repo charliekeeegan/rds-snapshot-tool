@@ -15,13 +15,13 @@ The Snapshot Tool for RDS automates the task of creating manual snapshots, copyi
 2. Clone the repository
 3. Create Lambda Zip using the 'Lambda Code' folder; the subfolders represent the lambda functions. While zipping, only zip the python files from each of the subfolders. Do not zip the folder itself.
 4. Upload the Lambda zip files to S3 Bucket(s). S3 Buckets should have the following files:
-    take_snapshots_rds.zip
-    share_snapshots_rds.zip
-    delete_old_snapshots_rds.zip
-    copy_snapshots_dest_rds.zip
-    delete_old_snapshots_dest_rds.zip
-    copy_snapshots_no_x_account_rds.zip
-    delete_old_snapshots_no_x_account_rds.zip
+    * take_snapshots_rds.zip
+    * share_snapshots_rds.zip
+    * delete_old_snapshots_rds.zip
+    * copy_snapshots_dest_rds.zip
+    * delete_old_snapshots_dest_rds.zip
+    * copy_snapshots_no_x_account_rds.zip
+    * delete_old_snapshots_no_x_account_rds.zip
 5. Refer the variables.tf file to identify input parameters based on the requirements.
 6. For the deployment in source account, the ‘code_bucket’ variable should refer to the Bucket name where the Source Lambda file are uploaded. And the ‘destination_account’ variable should refer to the AWS Account number of the target account to share the Snapshots with.
 7. For the deployment in destination account, the ‘code_bucket’ variable should refer to the Bucket name where the Destination Lambda file are uploaded. And ‘destination_region’ variable should refer to the AWS Region where the snapshot to be copied over.
