@@ -5,45 +5,45 @@ resource "aws_sfn_state_machine" "state_machine_take_snapshots_rds" {
 
   definition = <<EOF
 {
-	"Comment": "Triggers snapshot backup for RDS instances",
-	"StartAt": "TakeSnapshots",
-	"States": {
-		"TakeSnapshots": {
-			"Type": "Task",
-			"Resource": "${aws_lambda_function.lambda_take_snapshots_rds.arn}",
-			"Retry": [{
-					"ErrorEquals": [
-						"SnapshotToolException"
-					],
-					"IntervalSeconds": 300,
-					"MaxAttempts": 20,
-					"BackoffRate": 1
-				},
-				{
-					"ErrorEquals": [
-						"States.ALL"
-					],
-					"IntervalSeconds": 30,
-					"MaxAttempts": 20,
-					"BackoffRate": 1
-				}
-			],
-			"Next": "ShareSnapshot"
-		}
-	},
-	"ShareSnapshot": {
-		"Comment": "Start an execution of share snapshot and end",
-		"Type": "Task",
-		"Resource": "arn:aws:states:::states:startExecution",
-		"Parameters": {
-			"StateMachineArn": "${aws_sfn_state_machine.statemachine_share_snapshots_rds.arn}",
-			"Input": {
-				"NeedCallback": false,
-				"AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID.$": "$$.Execution.Id"
-			},
-			"End": true
-		}
-	}
+  "Comment": "Triggers snapshot backup for RDS instances",
+  "StartAt": "TakeSnapshots",
+  "States": {
+    "TakeSnapshots": {
+      "Type": "Task",
+      "Resource": "${aws_lambda_function.lambda_take_snapshots_rds.arn}",
+      "Next": "ShareSnapshot",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "SnapshotToolException"
+          ],
+          "IntervalSeconds": 300,
+          "MaxAttempts": 20,
+          "BackoffRate": 1
+        },
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "IntervalSeconds": 30,
+          "MaxAttempts": 20,
+          "BackoffRate": 1
+        }
+      ]
+    },
+    "ShareSnapshot": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::states:startExecution",
+      "Parameters": {
+        "StateMachineArn": "${aws_sfn_state_machine.statemachine_share_snapshots_rds.arn}",
+        "Input": {
+          "NeedCallback": false,
+          "AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID.$": "$$.Execution.Id"
+        }
+      },
+      "End": true
+    }
+  }
 }
 EOF 
 }
