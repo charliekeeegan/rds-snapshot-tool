@@ -98,7 +98,8 @@ resource "aws_iam_role" "iamrole_state_execution" {
         {
           Effect = "Allow"
           Action = [
-            "lambda:InvokeFunction"
+            "lambda:InvokeFunction",
+            "states:StartExecution"
 
           ]
           Resource = "*"

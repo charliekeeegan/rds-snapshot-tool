@@ -75,19 +75,20 @@ resource "aws_cloudwatch_event_target" "backup_rds" {
 }
 
 
-resource "aws_cloudwatch_event_rule" "share_snapshots_rds" {
-  name                = "trigger-share-snapshot-state-machine"
-  description         = "Triggers the ShareSnapshotsRDS state machine"
-  schedule_expression = "cron(/10 * * * ? *)"
-  is_enabled          = true
-}
+### Uncomment to share the snapshots on a schedule ####
+# resource "aws_cloudwatch_event_rule" "share_snapshots_rds" {
+#   name                = "trigger-share-snapshot-state-machine"
+#   description         = "Triggers the ShareSnapshotsRDS state machine"
+#   schedule_expression = "cron(/10 * * * ? *)"
+#   is_enabled          = true
+# }
 
-resource "aws_cloudwatch_event_target" "share_snapshots_rds" {
-  rule      = aws_cloudwatch_event_rule.share_snapshots_rds.name
-  target_id = "ShareSnapshotTarget1"
-  arn       = aws_sfn_state_machine.statemachine_share_snapshots_rds.id
-  role_arn  = aws_iam_role.iamrole_step_invocation.arn
-}
+# resource "aws_cloudwatch_event_target" "share_snapshots_rds" {
+#   rule      = aws_cloudwatch_event_rule.share_snapshots_rds.name
+#   target_id = "ShareSnapshotTarget1"
+#   arn       = aws_sfn_state_machine.statemachine_share_snapshots_rds.id
+#   role_arn  = aws_iam_role.iamrole_step_invocation.arn
+# }
 
 resource "aws_cloudwatch_event_rule" "delete_old_snapshots_rds" {
   name                = "trigger-delete-snapshot-state-machine"
