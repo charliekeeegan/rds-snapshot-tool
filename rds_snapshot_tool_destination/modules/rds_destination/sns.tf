@@ -36,6 +36,7 @@ data "aws_iam_policy_document" "failed_dest" {
 
 // failure on copy 
 resource "aws_sns_topic" "copy_failed_dest" {
+  name = "copies_failed_dest_rds_topic"
   display_name = "copies_failed_dest_rds"
 }
 
@@ -47,6 +48,7 @@ resource "aws_sns_topic_policy" "copy_failed_dest" {
 
 /// failure on delete 
 resource "aws_sns_topic" "delete_old_failed_dest" {
+  name = "delete_old_failed_dest_rds_topic"
   display_name = "delete_old_failed_dest_rds"
 }
 

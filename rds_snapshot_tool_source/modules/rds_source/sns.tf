@@ -32,6 +32,7 @@ data "aws_iam_policy_document" "failed_source" {
 
 
 resource "aws_sns_topic" "backups_failed" {
+  name = "backups_failed_rds_topic"
   display_name = "backups_failed_rds"
 }
 
@@ -41,6 +42,7 @@ resource "aws_sns_topic_policy" "backups_failed" {
 }
 
 resource "aws_sns_topic" "share_failed" {
+  name = "share_failed_rds_topic"
   display_name = "share_failed_rds"
 }
 
@@ -50,6 +52,7 @@ resource "aws_sns_topic_policy" "share_failed" {
 }
 
 resource "aws_sns_topic" "delete_old_failed" {
+  name = "delete_old_failed_rds_topic"
   display_name = "delete_old_failed_rds"
 }
 
