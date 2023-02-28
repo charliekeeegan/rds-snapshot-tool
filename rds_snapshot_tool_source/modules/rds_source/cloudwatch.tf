@@ -21,7 +21,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmcw_backups_failed" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "alarmcw_share_failed" {
-  alarm_name          = "failed-rds-delete-old-snapshot"
+  alarm_name          = "failed-rds-share-snapshot"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "ExecutionsFailed"
@@ -51,7 +51,7 @@ resource "aws_cloudwatch_metric_alarm" "alarmcw_delete_old_failed" {
   threshold           = "2.0"
 
   dimensions = {
-    StateMachineArn = aws_sfn_state_machine.statemachine_share_snapshots_rds.arn
+    StateMachineArn = aws_sfn_state_machine.statemachine_delete_old_snapshots_rds.arn
   }
 
   alarm_description = ""
