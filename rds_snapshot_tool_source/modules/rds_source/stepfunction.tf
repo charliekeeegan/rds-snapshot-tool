@@ -37,7 +37,7 @@ resource "aws_sfn_state_machine" "state_machine_take_snapshots_rds" {
 			"Type": "Task",
 			"Resource": "arn:aws:states:::states:startExecution",
 			"Parameters": {
-				"StateMachineArn": "${aws_sfn_state_machine.statemachine_share_snapshots_rds}",
+				"StateMachineArn": "${aws_sfn_state_machine.statemachine_share_snapshots_rds.arn}",
 				"Input": {
 					"NeedCallback": false,
 					"AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID.$": "$$.Execution.Id"

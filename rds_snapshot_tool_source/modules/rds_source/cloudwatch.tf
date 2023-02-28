@@ -75,12 +75,13 @@ resource "aws_cloudwatch_event_target" "backup_rds" {
 }
 
 
-resource "aws_cloudwatch_event_rule" "share_snapshots_rds" {
-  name                = "trigger-share-snapshot-state-machine"
-  description         = "Triggers the ShareSnapshotsRDS state machine"
-  schedule_expression = "cron(/10 * * * ? *)"
-  is_enabled          = true
-}
+### Uncomment to share the snapshots on a schedule
+# resource "aws_cloudwatch_event_rule" "share_snapshots_rds" {
+#   name                = "trigger-share-snapshot-state-machine"
+#   description         = "Triggers the ShareSnapshotsRDS state machine"
+#   schedule_expression = "cron(/10 * * * ? *)"
+#   is_enabled          = true
+# }
 
 resource "aws_cloudwatch_event_target" "share_snapshots_rds" {
   rule      = aws_cloudwatch_event_rule.share_snapshots_rds.name
